@@ -3,6 +3,7 @@ package com.codercampus.assignment4;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class ApplicationService {
     public Student[] studentCreation() {
@@ -10,14 +11,21 @@ public class ApplicationService {
         return service.studentExtractor(new Student[service.lineCounter()]);
     }
 
-    public Student[] csvCreator(Student[] studentBySubject){
+    public void csvCreator(Student[] students){
         FileService service = new FileService();
-        Student[] sortedStudent = service.sortBySubject(studentBySubject);
+        Arrays.sort(students, new Comparator<Student>() {
+            @Override
+            public int compare(Student person1, Student person2) {
+                if(person1 == null || person2 == null){
+                    return 0;
+                }
+                else{
+                    return person1.compareTo(person2);
+                }
+            }
+        });
 
-
-        //need method to count number of different classes available to students to know how many csvs to create; return integer of classes
-        //Note need to separate student by subject into their own arrays then do a sort on each array
-        //dynamically create number of array based on different subjects
+        service.studentWriter(students);
     }
 
 }

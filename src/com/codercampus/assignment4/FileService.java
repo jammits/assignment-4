@@ -1,11 +1,7 @@
 package com.codercampus.assignment4;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.io.*;
+
 
 public class FileService {
 
@@ -35,10 +31,13 @@ public class FileService {
             String line;
             Integer studentsIndex = 0;
             while ((line = studentReader.readLine()) != null) {
-                String[] studentDetail = line.split(",");
-                Student person = new Student(Integer.parseInt(studentDetail[0]),studentDetail[1],studentDetail[2],Integer.parseInt(studentDetail[3]));
-                students[studentsIndex] = person;
-                studentsIndex++;
+                if(!line.equals("")){
+                    String[] studentDetail = line.split(",");
+                    Student person = new Student(Integer.parseInt(studentDetail[0]),studentDetail[1],studentDetail[2],Integer.parseInt(studentDetail[3]));
+                    students[studentsIndex] = person;
+                    studentsIndex++;
+                }
+
             }
 
             return students;
@@ -51,22 +50,27 @@ public class FileService {
         }
     }
 
-    public Student[] sortBySubject(Student[] students){
-        Arrays.sort(students, new Comparator<Student>() {
-            @Override
-            public int compare(Student person1, Student person2) {
-                if (person1.getCourse().compareTo(person2.getCourse()) == 0) {
-                    return person1.compareTo(person2);
+    public void studentWriter(Student[] students){
+
+        try(BufferedWriter subject1 = new BufferedWriter(new FileWriter("course1.csv")); BufferedWriter subject2 = new BufferedWriter(new FileWriter("course2.csv"));
+        BufferedWriter subject3 = new BufferedWriter(new FileWriter("course3.csv"))){
+            for(Student student: students){
+                if(student != null){
+                    if(student.getCourse().matches("^COMPSCI.[0-9]+")){
+                        subject1.write(student.toString());
+                    }
+                    else if(student.getCourse().matches("^APMTH.[0-9]+")){
+                        subject2.write(student.toString());
+                    }
+                    else if (student.getCourse().matches("^STAT.[0-9]+")) {
+                        subject3.write(student.toString());
+                    }
                 }
-                return person1.getCourse().compareTo(person2.getCourse());
             }
-        });
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        return students;
-
-    }
-
-    public Integer countSubject(Student[] students){
-        
     }
 }

@@ -45,13 +45,20 @@ public class Student implements Comparable<Student>{
         this.grade = grade;
     }
 
+    public String toString(){
+        return this.studentId.toString()+","+this.studentName+","+this.course+","+this.grade.toString()+"\n";
+    }
     @Override
     //Sort student on grade then on name if same grade implementation for comparable<T>
     public int compareTo(Student that) {
-        if (this.grade.compareTo(that.grade) == 0) {
-            return this.studentName.compareTo(that.studentName);
-        } else {
-            return this.grade.compareTo(that.grade);
+        if(that == null){
+           return 0;
+        }
+        else if (that.grade.compareTo(this.grade) == 0) {
+            return that.studentName.compareTo(this.studentName);
+        }
+        else {
+            return that.grade.compareTo(this.grade);
         }
     }
 }
