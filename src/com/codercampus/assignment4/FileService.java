@@ -54,6 +54,9 @@ public class FileService {
 
         try(BufferedWriter subject1 = new BufferedWriter(new FileWriter("course1.csv")); BufferedWriter subject2 = new BufferedWriter(new FileWriter("course2.csv"));
         BufferedWriter subject3 = new BufferedWriter(new FileWriter("course3.csv"))){
+            subject1.write("Student ID,Student Name,Course,Grade\n");
+            subject2.write("Student ID,Student Name,Course,Grade\n");
+            subject3.write("Student ID,Student Name,Course,Grade\n");
             for(Student student: students){
                 if(student != null){
                     if(student.getCourse().matches("^COMPSCI.[0-9]+")){
