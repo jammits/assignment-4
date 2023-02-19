@@ -50,6 +50,7 @@ public class FileService {
         }
     }
 
+    //Note should refactor to separate the file writing to one writer and the sorting into separate methods
     public void studentWriter(Student[] students){
 
         try(BufferedWriter subject1 = new BufferedWriter(new FileWriter("course1.csv")); BufferedWriter subject2 = new BufferedWriter(new FileWriter("course2.csv"));
