@@ -1,7 +1,8 @@
 package com.codercampus.assignment4;
 
 import java.io.*;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class FileService {
 
@@ -51,25 +52,16 @@ public class FileService {
     }
 
     //Note should refactor to separate the file writing to one writer and the sorting into separate methods
-    public void studentWriter(Student[] students){
+    public void studentWriter(Student[] students, String fileName){
 
-        try(BufferedWriter subject1 = new BufferedWriter(new FileWriter("course1.csv")); BufferedWriter subject2 = new BufferedWriter(new FileWriter("course2.csv"));
-        BufferedWriter subject3 = new BufferedWriter(new FileWriter("course3.csv"))){
-            subject1.write("Student ID,Student Name,Course,Grade\n");
-            subject2.write("Student ID,Student Name,Course,Grade\n");
-            subject3.write("Student ID,Student Name,Course,Grade\n");
-            for(Student student: students){
-                if(student != null){
-                    if(student.getCourse().matches("^COMPSCI.[0-9]+")){
-                        subject1.write(student.toString());
-                    }
-                    else if(student.getCourse().matches("^APMTH.[0-9]+")){
-                        subject2.write(student.toString());
-                    }
-                    else if (student.getCourse().matches("^STAT.[0-9]+")) {
-                        subject3.write(student.toString());
-                    }
+        try(BufferedWriter subject = new BufferedWriter(new FileWriter(fileName))){
+            subject.write("Student ID,Student Name,Course,Grade\n");
+
+            for (Student student : students) {
+                if (student != null) {
+                    subject.write(student.toString());
                 }
+
             }
         }
         catch (IOException e) {

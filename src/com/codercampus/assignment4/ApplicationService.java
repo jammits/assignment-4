@@ -1,7 +1,6 @@
 package com.codercampus.assignment4;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -25,7 +24,28 @@ public class ApplicationService {
             }
         });
 
-        service.studentWriter(students);
+        Student[] compSci = new Student[students.length];
+        Student[] stat = new Student[students.length];
+        Student[] ampth = new Student[students.length];
+        int csCnt = 0, statCnt = 0, ampthCnt = 0;
+
+        for(Student student: students){
+            if(student != null){
+                if(student.getCourse().matches("^COMPSCI.[0-9]+")){
+                    compSci[csCnt++] = student;
+                }
+                else if(student.getCourse().matches("^APMTH.[0-9]+")){
+                    ampth[ampthCnt++] = student;
+                }
+                else if (student.getCourse().matches("^STAT.[0-9]+")) {
+                    stat[statCnt++] = student;
+                }
+            }
+        }
+
+        service.studentWriter(compSci,"course1.csv");
+        service.studentWriter(ampth,"course2.csv");
+        service.studentWriter(stat,"course3.csv");
     }
 
 }
